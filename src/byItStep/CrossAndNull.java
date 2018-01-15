@@ -21,6 +21,8 @@ public class CrossAndNull {
 
             inputXO(field,symbol);
             symbol  =symbol=='X' ? 'O':'X';
+            chekRandomIn(field, symbol);
+            symbol = symbol == 'X' ? 'O' : 'X';
             showfield(field);
             result=checkRezalt(field);
             checkRezalt(field);
@@ -61,6 +63,101 @@ public class CrossAndNull {
          } while  (number<1 || number>9 || field[n][m] !=' ');
         field[n][m] = symbol;
         }
+
+
+    public static void randomInput(char[][] field, char symbol) { //
+        int n = 0, m = 0, number = 0;
+        // (n-1)%3- столбец // 2-(n-1)/3 строка
+        do {
+            number = (int) (Math.random() * 10);
+            n = 2 - (number - 1) / 3;
+            m = (number - 1) % 3;
+        } while (number < 1 || number > 9 || field[n][m] != ' ');
+        field[n][m] = symbol;
+    }
+
+    public static void input(char[][] field, char symbol, int i, int j) {
+        field[i][j] = symbol;
+
+    }
+
+    public static void  chekRandomIn(char field[][], char symbol) {
+
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field.length; j++) {
+                if (field[i][j] == symbol)
+
+
+
+
+                {
+                    randomInput(field, symbol);
+                   }
+
+            }
+        } /*     else;
+            if (field[i][0] == 'O' && field[i][1] == 'O' || field[i][0] == 'O' && field[i][2] == 'O' || field[i][1] == 'O' && field[i][2] == 'O') {
+                {
+                    if (field[i][0] == ' ') {
+                        input(field, symbol, i, 0);
+                    } else if (field[i][1] == ' ') {
+                        input(field, symbol, i, 1);
+                    } else if (field[i][2] == ' ') {
+                        input(field, symbol, i, 2);
+                    }
+                    break;
+                }
+            }
+           else ;
+            // проверка 2=х Х в столбце
+            if (field[0][i] == 'O' && field[1][i] == 'O' || field[0][i] == 'O' && field[2][i] == 'O' || field[1][i] == 'O' && field[2][i] == 'O') {
+                if (field[0][i] == ' ') {
+                    field[0][i] = symbol;
+                    break;
+                }
+                if (field[1][i] == ' ') {
+                    field[1][i] = symbol;
+                    break;
+                }
+                if (field[2][i] == ' ') {
+                    field[2][i] = symbol;
+                    break;
+                }
+            } else;
+            if (field[i][0] == 'X' && field[i][1] == 'X' || field[i][0] == 'X' && field[i][2] == 'X' || field[i][1] == 'X' && field[i][2] == 'X') {
+                {
+                    if (field[i][0] == ' ') {
+                        input(field, symbol, i, 0);
+                    } else if (field[i][1] == ' ') {
+                        input(field, symbol, i, 1);
+                    } else if (field[i][2] == ' ') {
+                        input(field, symbol, i, 2);
+                    }
+                    break;
+                }
+            } else ;
+            // проверка 2=х Х в столбце
+            if (field[0][i] == 'X' && field[1][i] == 'X' || field[0][i] == 'X' && field[2][i] == 'X' || field[1][i] == 'X' && field[2][i] == 'X') {
+                if (field[0][i] == ' ') {
+                    field[0][i] = symbol;
+                    break;
+                }
+                if (field[1][i] == ' ') {
+                    field[1][i] = symbol;
+                    break;
+                }
+                if (field[2][i] == ' ') {
+                    field[2][i] = symbol;
+                    break;
+                }
+            }
+
+        }*/
+
+    }
+
+
+
 
     public static int checkRezalt (char field[][] ) {
         /*
@@ -119,5 +216,9 @@ public class CrossAndNull {
 
 return 3;
     }
+
+
+
+
 
 }
