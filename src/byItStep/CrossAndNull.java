@@ -7,34 +7,41 @@ import java.util.Scanner;
  */
 public class CrossAndNull {
 
-
-
+    public static final int WIN_1 = 1;
+    public static final int WIN_2 = 2;
+    public static final int DRAW= 3;
+    public static final int CONTINUE= 0;
+    
+    public static final char PLAYER_1='X';
+    public static final char PLAYER_2='O';
+    public static final char EMPTY=' ';
+    
     public static void main(String[] args) {
         System.out.print("Игра");
         System.out.println("Крестики-Нолики");
         System.out.println("Для ввода Х или О используете боковую клавиатуру");
-        char  field [][]= {{' ' ,' ' ,' ' },{' ' ,' ' ,' ' },{' ' ,' ' ,' ' }};
+        char  field [][]= {{EMPTY ,EMPTY ,EMPTY },{EMPTY ,EMPTY ,EMPTY },{EMPTY ,EMPTY ,EMPTY }};
         int result;
-        char symbol='X';
+        char symbol=PLAYER_1;
         showfield(field);
         do{
 
             inputXO(field,symbol);
-            symbol  =symbol=='X' ? 'O':'X';
+            symbol  =symbol==PLAYER_1 ? PLAYER_2:PLAYER_1;
             chekRandomIn(field, symbol);
-            symbol = symbol == 'X' ? 'O' : 'X';
+            symbol = symbol == PLAYER_1 ? PLAYER_2 : PLAYER_1;
             showfield(field);
             result=checkRezalt(field);
             checkRezalt(field);
 
-        } while (result==0);
+        } while (result==CONTINUE);
 
         switch (checkRezalt(field)){
-            case 1:System.out.println("win X");
+            case WIN_1:System.out.println("win "+ PLAYER_1);
                 break;
-            case 2:System.out.println("win O");
+            case WIN_2:System.out.println("win "+PLAYER_2);
                 break;
-            case 3: System.out.println("Ничья");
+            case DRAW: System.out.println("Ничья");
                 break;
 
         }
@@ -60,7 +67,7 @@ public class CrossAndNull {
            number = scanner.nextInt();
            n = 2 - (number - 1) / 3;
            m = (number - 1) % 3;
-         } while  (number<1 || number>9 || field[n][m] !=' ');
+         } while  (number<1 || number>9 || field[n][m] !=EMPTY);
         field[n][m] = symbol;
         }
 
@@ -72,7 +79,7 @@ public class CrossAndNull {
             number = (int) (Math.random() * 10);
             n = 2 - (number - 1) / 3;
             m = (number - 1) % 3;
-        } while (number < 1 || number > 9 || field[n][m] != ' ');
+        } while (number < 1 || number > 9 || field[n][m] != EMPTY);
         field[n][m] = symbol;
     }
 
@@ -82,27 +89,84 @@ public class CrossAndNull {
     }
 
     public static void  chekRandomIn(char field[][], char symbol) {
-
+int lin=0, col=0, ii=0;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field.length; j++) {
-                if (field[i][j] == symbol)
-
-
-
-
-                {
-                    randomInput(field, symbol);
-                   }
-
+                if (field[i][j] == symbol) {
+                    ii++;
+                }
             }
-        } /*     else;
-            if (field[i][0] == 'O' && field[i][1] == 'O' || field[i][0] == 'O' && field[i][2] == 'O' || field[i][1] == 'O' && field[i][2] == 'O') {
+        }
+        if(ii==0){
+            randomInput(field,symbol);}
+        else
+
+        for (int i = 0; i < field.length; i++) {
+            if (field[1][1] == PLAYER_1 && field [2][0]==PLAYER_1 ) {
+
+                if (field[0][2] == EMPTY) {
+                    field[0][2] = symbol;
+                    break;
+                } else
+                if (field[2][1] == EMPTY) {
+                    field[2][1] = symbol;
+                    break;
+                }
+
+                if (field[0][1] == EMPTY) {
+                    field[0][1] = symbol;
+                    break;
+                }
+                if (field[0][2] == EMPTY) {
+                    field[0][2] = symbol;
+                    break;
+                }
+            } else
+
+
+            if (field[i][0] == PLAYER_1 && field[i][1] == PLAYER_1 || field[i][0] == PLAYER_1 && field[i][2] == PLAYER_1 || field[i][1] == PLAYER_1 && field[i][2] == PLAYER_1) {
+
+                if (field[i][0] == EMPTY) {
+                    field[i][0] = symbol;
+                    break;
+                }
+                if (field[i][1] == EMPTY) {
+                    field[i][1] = symbol;
+                    break;
+                }
+                if (field[i][2] == EMPTY) {
+                    field[i][2] = symbol;
+                    break;
+                }
+            } else
+
+
+            if (field[0][i] == PLAYER_1 && field[1][i] == PLAYER_1 || field[0][i] == PLAYER_1 && field[2][i] == PLAYER_1 || field[1][i] == PLAYER_1 && field[2][i] == PLAYER_1) {
+
+                if (field[0][i] == EMPTY) {
+                    field[0][i] = symbol;
+                    break;
+                }
+                if (field[1][i] == EMPTY) {
+                    field[1][i] = symbol;
+                    break;
+                }
+                if (field[2][i] == EMPTY) {
+                    field[2][i] = symbol;
+                    break;
+                }
+            }
+        }
+
+
+        /*     else;
+            if (field[i][0] == PLAYER_2 && field[i][1] == PLAYER_2 || field[i][0] == PLAYER_2 && field[i][2] == PLAYER_2 || field[i][1] == PLAYER_2 && field[i][2] == PLAYER_2) {
                 {
-                    if (field[i][0] == ' ') {
+                    if (field[i][0] == EMPTY) {
                         input(field, symbol, i, 0);
-                    } else if (field[i][1] == ' ') {
+                    } else if (field[i][1] == EMPTY) {
                         input(field, symbol, i, 1);
-                    } else if (field[i][2] == ' ') {
+                    } else if (field[i][2] == EMPTY) {
                         input(field, symbol, i, 2);
                     }
                     break;
@@ -110,43 +174,43 @@ public class CrossAndNull {
             }
            else ;
             // проверка 2=х Х в столбце
-            if (field[0][i] == 'O' && field[1][i] == 'O' || field[0][i] == 'O' && field[2][i] == 'O' || field[1][i] == 'O' && field[2][i] == 'O') {
-                if (field[0][i] == ' ') {
+            if (field[0][i] == PLAYER_2 && field[1][i] == PLAYER_2 || field[0][i] == PLAYER_2 && field[2][i] == PLAYER_2 || field[1][i] == PLAYER_2 && field[2][i] == PLAYER_2) {
+                if (field[0][i] == EMPTY) {
                     field[0][i] = symbol;
                     break;
                 }
-                if (field[1][i] == ' ') {
+                if (field[1][i] == EMPTY) {
                     field[1][i] = symbol;
                     break;
                 }
-                if (field[2][i] == ' ') {
+                if (field[2][i] == EMPTY) {
                     field[2][i] = symbol;
                     break;
                 }
             } else;
-            if (field[i][0] == 'X' && field[i][1] == 'X' || field[i][0] == 'X' && field[i][2] == 'X' || field[i][1] == 'X' && field[i][2] == 'X') {
+            if (field[i][0] == PLAYER_1 && field[i][1] == PLAYER_1 || field[i][0] == PLAYER_1 && field[i][2] == PLAYER_1 || field[i][1] == PLAYER_1 && field[i][2] == PLAYER_1) {
                 {
-                    if (field[i][0] == ' ') {
+                    if (field[i][0] == EMPTY) {
                         input(field, symbol, i, 0);
-                    } else if (field[i][1] == ' ') {
+                    } else if (field[i][1] == EMPTY) {
                         input(field, symbol, i, 1);
-                    } else if (field[i][2] == ' ') {
+                    } else if (field[i][2] == EMPTY) {
                         input(field, symbol, i, 2);
                     }
                     break;
                 }
             } else ;
             // проверка 2=х Х в столбце
-            if (field[0][i] == 'X' && field[1][i] == 'X' || field[0][i] == 'X' && field[2][i] == 'X' || field[1][i] == 'X' && field[2][i] == 'X') {
-                if (field[0][i] == ' ') {
+            if (field[0][i] == PLAYER_1 && field[1][i] == PLAYER_1 || field[0][i] == PLAYER_1 && field[2][i] == PLAYER_1 || field[1][i] == PLAYER_1 && field[2][i] == PLAYER_1) {
+                if (field[0][i] == EMPTY) {
                     field[0][i] = symbol;
                     break;
                 }
-                if (field[1][i] == ' ') {
+                if (field[1][i] == EMPTY) {
                     field[1][i] = symbol;
                     break;
                 }
-                if (field[2][i] == ' ') {
+                if (field[2][i] == EMPTY) {
                     field[2][i] = symbol;
                     break;
                 }
@@ -169,39 +233,39 @@ public class CrossAndNull {
 
                 if (field[i][0] ==field[i][1] && field[i][1] ==field[i][2] ){
 
-                if (field[i][0]=='X'){
-                   return 1;
+                if (field[i][0]==PLAYER_1){
+                   return WIN_1;
                 }
-                    if (field[i][0]=='O'){
-                        return 2;
+                    if (field[i][0]==PLAYER_2){
+                        return WIN_2;
                     }
                 }
             if (field[0][i] ==field[1][i] && field[1][i] ==field[2][i] ){
 
-                if (field[0][i]=='X'){
-                    return 1;
+                if (field[0][i]==PLAYER_1){
+                    return WIN_1;
                 }
-                if (field[0][i]=='O'){
-                    return 2;
+                if (field[0][i]==PLAYER_2){
+                    return WIN_2;
                 }
             }
             if (field[0][0] ==field[1][1] && field[1][1] ==field[2][2] ){
 
-                if (field[0][0]=='X'){
-                    return 1;
+                if (field[0][0]==PLAYER_1){
+                    return WIN_1;
                 }
-                if (field[0][0]=='O'){
-                    return 2;
+                if (field[0][0]==PLAYER_2){
+                    return WIN_2;
                 }
             }
 
             if (field[0][2] ==field[1][1] && field[1][1] ==field[2][0] ){
 
-                if (field[0][2]=='X'){
-                    return 1;
+                if (field[0][2]==PLAYER_1){
+                    return WIN_1;
                 }
-                if (field[0][2]=='O'){
-                    return 2;
+                if (field[0][2]==PLAYER_2){
+                    return WIN_2;
                 }
             }
 
@@ -209,12 +273,12 @@ public class CrossAndNull {
 
         for (int i=0; i<field.length; i++){
             for (int j=0; j<field[i].length; j++){
-                if (field[i][j]==' ')
-                  return 0;
+                if (field[i][j]==EMPTY)
+                  return CONTINUE;
                 }
             }
 
-return 3;
+return DRAW;
     }
 
 
